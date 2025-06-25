@@ -27,13 +27,6 @@ export function PortfolioTabs({ activeTab, setActiveTab }: PortfolioTabsProps) {
       >
         Tokens
       </Button>
-      <Button
-        variant={activeTab === PortfolioViewType.NFTS ? 'default' : 'secondary'}
-        onClick={() => setActiveTab(PortfolioViewType.NFTS)}
-        className="text-sm"
-      >
-        NFTs
-      </Button>
     </div>
   )
 }

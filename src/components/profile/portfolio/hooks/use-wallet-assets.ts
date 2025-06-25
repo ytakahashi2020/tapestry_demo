@@ -43,64 +43,71 @@ export function useWalletAssets(walletAddress: string): UseWalletAssetsResult {
       setError(null)
 
       try {
-        // In a production environment, these would be actual API calls to Helius DAS API
-        // For this example, we're using mock data to demonstrate the structure
+        // Fetch actual SOL balance
+        const solResponse = await fetch(`https://api.devnet.solana.com`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            jsonrpc: '2.0',
+            id: 1,
+            method: 'getBalance',
+            params: [walletAddress]
+          })
+        })
+        const solData = await solResponse.json()
+        const solBalance = solData.result?.value ? (solData.result.value / 1e9).toFixed(4) : '0.0000'
 
-        // Mock data for demonstration
-        const mockAssets: Asset[] = [
-          // Tokens
+        // Fetch USDC balance (devnet USDC mint)
+        const usdcMint = '4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU' // Devnet USDC
+        
+        const usdcResponse = await fetch(`/api/tokens/balance?walletAddress=${walletAddress}&mintAddress=${usdcMint}`)
+        let usdcBalance = '0.000000'
+        
+        if (usdcResponse.ok) {
+          const usdcData = await usdcResponse.json()
+          if (usdcData.balance?.uiAmountString) {
+            usdcBalance = parseFloat(usdcData.balance.uiAmountString).toFixed(6)
+          }
+        }
+
+        // Create assets array with real data
+        const assets: Asset[] = [
           {
             id: 'So11111111111111111111111111111111111111112',
             name: 'Solana',
             symbol: 'SOL',
-            amount: '2.543',
+            amount: solBalance,
             decimals: 9,
-            value: 358.56,
+            value: parseFloat(solBalance) * 200, // Approximate SOL price for demo
             imageUrl:
               'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png',
             type: 'token',
           },
           {
-            id: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
+            id: usdcMint,
             name: 'USD Coin',
             symbol: 'USDC',
-            amount: '124.76',
+            amount: usdcBalance,
             decimals: 6,
-            value: 124.76,
+            value: parseFloat(usdcBalance), // USDC is pegged to $1
             imageUrl:
               'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png',
             type: 'token',
           },
-          // NFTs
-          {
-            id: 'nft1',
-            name: 'Solana Monkey Business #123',
-            symbol: 'SMB',
-            imageUrl: 'https://arweave.net/example-monkey-nft',
-            type: 'nft',
-          },
-          {
-            id: 'nft2',
-            name: 'Okay Bear #456',
-            symbol: 'BEAR',
-            imageUrl: 'https://arweave.net/example-bear-nft',
-            type: 'nft',
-          },
         ]
 
-        // Calculate stats
-        const tokenAssets = mockAssets.filter((asset) => asset.type === 'token')
-        const nftAssets = mockAssets.filter((asset) => asset.type === 'nft')
+        // Calculate stats (only tokens, no NFTs)
+        const tokenAssets = assets.filter((asset) => asset.type === 'token')
         const totalValue = tokenAssets.reduce(
           (sum, token) => sum + (token.value || 0),
           0,
         )
 
-        setAssets(mockAssets)
+        setAssets(assets)
         setStats({
           totalValue,
           tokenCount: tokenAssets.length,
-          nftCount: nftAssets.length,
+          nftCount: 0, // No NFTs
         })
 
         // In a production implementation, this would be the API calls:
