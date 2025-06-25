@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
           walletAddress,
         })
         return NextResponse.json(response)
-      } catch (error: any) {
+      } catch {
         // If wallet-specific search fails, return empty array
         console.log('Wallet-specific search failed, returning empty array')
         return NextResponse.json({ profiles: [], totalCount: 0 })

@@ -18,7 +18,7 @@ export function FeaturedProfiles() {
     }
   }, [walletAddress, getSuggestedGlobal])
   
-  const featuredProfiles = profiles?.profiles?.slice(0, 3) || []
+  const featuredProfiles = profiles?.slice(0, 3) || []
 
   if (featuredProfiles.length === 0) {
     return null
@@ -35,16 +35,16 @@ export function FeaturedProfiles() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {featuredProfiles.map((profile) => (
-          <Link key={profile.username} href={`/${profile.username}`}>
+          <Link key={profile.profile.username} href={`/${profile.profile.username}`}>
             <Card className="p-6 hover:scale-105 transition-all duration-300 cursor-pointer bg-gradient-to-br from-yellow-50 via-pink-50 to-purple-50 border-yellow-200">
               <div className="flex flex-col items-center text-center space-y-4">
-                {profile.image ? (
+                {profile.profile.image ? (
                   <div className="relative">
                     <Image
-                      src={profile.image}
+                      src={profile.profile.image}
                       width={80}
                       height={80}
-                      alt={profile.username}
+                      alt={profile.profile.username}
                       className="rounded-full border-4 border-yellow-300 shadow-lg"
                       unoptimized
                     />
@@ -64,19 +64,12 @@ export function FeaturedProfiles() {
                 )}
                 <div>
                   <h3 className="font-bold text-lg text-purple-700 flex items-center gap-1">
-                    🎆 {profile.username}
+                    🎆 {profile.profile.username}
                   </h3>
-                  {profile.bio && (
-                    <div className="bg-white/70 rounded-xl p-2 mt-2">
-                      <p className="text-sm text-gray-600 italic line-clamp-2">
-                        "💬 {profile.bio}"
-                      </p>
-                    </div>
-                  )}
                 </div>
                 <div className="bg-gradient-to-r from-pink-100 to-purple-100 rounded-full px-4 py-2">
                   <span className="text-sm font-bold text-purple-600">
-                    👥 {profile.socialCounts?.followers || 0} friends
+                    ✨ Featured Friend
                   </span>
                 </div>
               </div>

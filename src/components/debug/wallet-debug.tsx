@@ -36,7 +36,7 @@ export function WalletDebug() {
             <div key={index} className="bg-gray-100 rounded p-2 mt-2">
               <p><strong>Type:</strong> {wallet.walletClientType}</p>
               <p><strong>Address:</strong> {wallet.address}</p>
-              <p><strong>Chain:</strong> {wallet.chainType}</p>
+              <p><strong>Chain:</strong> {(wallet as any).chainType || 'N/A'}</p>
             </div>
           ))}
         </div>
@@ -62,8 +62,8 @@ export function WalletDebug() {
 
       {typeof window !== 'undefined' && (
         <div className="mt-4 text-sm text-gray-600">
-          <p><strong>Phantom Detected:</strong> {window.phantom?.solana ? '✅' : '❌'}</p>
-          <p><strong>Solflare Detected:</strong> {window.solflare ? '✅' : '❌'}</p>
+          <p><strong>Phantom Detected:</strong> {(window as any).phantom?.solana ? '✅' : '❌'}</p>
+          <p><strong>Solflare Detected:</strong> {(window as any).solflare ? '✅' : '❌'}</p>
         </div>
       )}
     </Card>

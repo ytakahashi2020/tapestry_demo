@@ -64,7 +64,7 @@ export function Profile({ username }: Props) {
               </span>
             </div>
             <div className="mt-4 bg-gradient-to-r from-pink-100 to-purple-100 rounded-xl p-3">
-              <p className="text-gray-700 italic">"💬 {data?.profile?.bio || 'No bio yet... 🤔'}"</p>
+              <p className="text-gray-700 italic">&quot;💬 {data?.profile?.bio || 'No bio yet... 🤔'}&quot;</p>
             </div>
           </div>
           <div onClick={(e) => e.stopPropagation()}>

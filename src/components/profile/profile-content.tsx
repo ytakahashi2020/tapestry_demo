@@ -22,7 +22,7 @@ export async function ProfileContent({ username }: Props) {
   return (
     <div className="space-y-4">
       <MyProfile username={username} />
-      <ProfileStats followers={followers?.length} />
+      <ProfileStats followers={followers?.profiles?.length || 0} />
       <PortfolioView username={username} />
       <div className="flex w-full justify-between space-x-4">
         <FollowList followers={followers} following={following} />
