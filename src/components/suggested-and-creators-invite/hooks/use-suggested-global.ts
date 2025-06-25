@@ -4,7 +4,7 @@ import { ISuggestedProfile } from '@/models/profile.models'
 import { useCallback, useState } from 'react'
 
 export const useSuggestedGlobal = () => {
-  const [profiles, setProfiles] = useState<ISuggestedProfile[]>()
+  const [profiles, setProfiles] = useState<ISuggestedProfile[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 

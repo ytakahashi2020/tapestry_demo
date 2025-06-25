@@ -10,7 +10,7 @@ import { useEffect } from 'react'
 
 export function FeaturedProfiles() {
   const { walletAddress } = useCurrentWallet()
-  const { profiles, getSuggestedGlobal } = useSuggestedGlobal()
+  const { profiles, loading, getSuggestedGlobal } = useSuggestedGlobal()
   
   useEffect(() => {
     if (walletAddress) {
@@ -18,7 +18,11 @@ export function FeaturedProfiles() {
     }
   }, [walletAddress, getSuggestedGlobal])
   
-  const featuredProfiles = profiles?.slice(0, 3) || []
+  const featuredProfiles = Array.isArray(profiles) ? profiles.slice(0, 3) : []
+
+  if (loading) {
+    return null // または loading スピナーを表示
+  }
 
   if (featuredProfiles.length === 0) {
     return null
