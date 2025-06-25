@@ -12,7 +12,7 @@ export function PrivyClientProvider({
     <PrivyProvider
       appId={process.env.NEXT_PUBLIC_PRIVY_APP_ID || ''}
       config={{
-        loginMethods: ['email', 'wallet'],
+        loginMethods: ['wallet'],
         appearance: { 
           theme: 'light',
         },
@@ -22,6 +22,9 @@ export function PrivyClientProvider({
               shouldAutoConnect: false,
             })
           },
+        },
+        embeddedWallets: {
+          createOnLogin: 'off',
         },
       }}
     >

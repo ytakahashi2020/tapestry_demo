@@ -101,7 +101,7 @@ export function Header() {
                           <Button
                             variant="ghost"
                             className="px-4 py-2 hover:bg-pink-100 w-full text-gray-700"
-                            onClick={() => handleCopy(walletAddress)}
+                            onClick={() => walletAddress && handleCopy(walletAddress)}
                           >
                             {copied ? (
                               <Check size={16} className="mr-2" />
@@ -109,7 +109,7 @@ export function Header() {
                               <Clipboard size={16} className="mr-2" />
                             )}
                             {abbreviateWalletAddress({
-                              address: walletAddress,
+                              address: walletAddress || '',
                             })}
                           </Button>
                         </div>

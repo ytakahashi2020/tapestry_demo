@@ -5,6 +5,11 @@ export const abbreviateWalletAddress = ({
   address: string
   maxLength?: number
 }) => {
+  // Handle non-string values safely
+  if (!address || typeof address !== 'string') {
+    return ''
+  }
+  
   if (address.length <= maxLength) return address
 
   const PRE_EMPTIVE_WALLET_ADDRESS_PREFIX = 'pre-emptive-'
